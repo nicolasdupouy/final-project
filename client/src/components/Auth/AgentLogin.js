@@ -19,7 +19,7 @@ class AgentLogin extends Component {
 
         event.preventDefault();
 
-        axios.post("http://localhost:5000/api/agent/login", { username, password })
+        axios.post("http://localhost:5000/auth/agent/login", { username, password })
             .then((response) => {
                 this.props.logUser(response.data)
                 this.setState({ username: '', password: '' })

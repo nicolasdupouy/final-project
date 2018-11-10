@@ -17,3 +17,11 @@ code {
 button {
   margin: 10px;
 }
+
+.message-error{
+  color:red;
+}
+
+.message-success{
+  color:green;
+}

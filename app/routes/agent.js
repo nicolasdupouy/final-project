@@ -98,5 +98,18 @@ authRouter.post('/signup', (req, res, next) => {
     });
 
 })
+authRouter.post('/logout', (req, res, next) => {
+    req.logout();
+    res.status(200).json({ message: 'Log out success!' });
+})
+
+authRouter.get('/loggedin', (req, res, next) => {
+    // req.isAuthenticated() is defined by passport
+    if (req.isAuthenticated()) {
+        res.status(200).json(req.user);
+        return;
+    }
+    res.status(403).json({ message: 'Unauthorized' });
+});
 
 module.exports=authRouter;

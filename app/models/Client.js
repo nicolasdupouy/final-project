@@ -8,5 +8,5 @@ const clientShema = new Schema({
     location: {type:String, enum:['Casa', 'Rabat']}
 })
 
-const Client=mongoose.model("Agent",clientShema);
+const Client=mongoose.model("Client",clientShema);
 module.exports=Client;

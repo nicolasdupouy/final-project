@@ -62,12 +62,12 @@ passport.deserializeUser((id, cb) => {
   });
 });
 
-passport.deserializeUser((id, cb) => {
-  Client.findById(id, (err, user) => {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
+// passport.deserializeUser((id, cb) => {
+//   Client.findById(id, (err, user) => {
+//     if (err) { return cb(err); }
+//     cb(null, user);
+//   });
+// });
 
 passport.use(new LocalStrategy((username, password, next) => {
   Agent.findOne({ username }, (err, user) => {
@@ -85,21 +85,21 @@ passport.use(new LocalStrategy((username, password, next) => {
   });
 }));
 
-passport.use(new LocalStrategy((username, password, next) => {
-  Client.findOne({ username }, (err, user) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return next(null, false, { message: "Incorrect username" });
-    }
-    if (!bcrypt.compareSync(password, user.password)) {
-      return next(null, false, { message: "Incorrect password" });
-    }
+// passport.use(new LocalStrategy((username, password, next) => {
+//   Client.findOne({ username }, (err, user) => {
+//     if (err) {
+//       return next(err);
+//     }
+//     if (!user) {
+//       return next(null, false, { message: "Incorrect username" });
+//     }
+//     if (!bcrypt.compareSync(password, user.password)) {
+//       return next(null, false, { message: "Incorrect password" });
+//     }
 
-    return next(null, user);
-  });
-}));
+//     return next(null, user);
+//   });
+// }));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -112,8 +112,7 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
 // default value for title local
-app.locals.title = 'CONTROL - UNION - EXPERTISE';
-
+app.locals.title = 'CONTROL UNION - EXPERTISE';
 
 app.use(cors({
   credentials: true,
@@ -126,5 +125,7 @@ app.use('/', index);
 const agent = require('./routes/agent');
 app.use('/auth/agent', agent);
 
+const ship = require('./routes/ship');
+app.use('/', ship);
 
 module.exports = app;
