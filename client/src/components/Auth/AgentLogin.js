@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
+import NavBarSimple from "./../NavBarSimple";
 
 class AgentLogin extends Component {
     constructor(props) {
@@ -33,23 +34,41 @@ class AgentLogin extends Component {
     render() {
         return (
             <div>
+                <NavBarSimple />
                 <div>
                     <form onSubmit={this.handleFormSubmit.bind(this)}>
-                        <label>Login:</label>
-                        <input type="text" name="username" value={this.state.username} onChange={(e) => this.handleChange(e)} />
-                        <label>Password</label>
-                        <input type="text" name="password" value={this.state.password} onChange={(e) => this.handleChange(e)} />
-                        <input type="submit" value="submit" />
+                        <div className="field">
+                            <label className="label">Login:</label>
+                            <div className="control">
+                                <input className="input" type="text" name="username" value={this.state.username} onChange={(e) => this.handleChange(e)} />
+                            </div>
+
+                        </div>
+                        <div className="field">
+                            <label className="label">Password</label>
+                            <div className="control">
+                                <input className="input" type="text" name="password" value={this.state.password} onChange={(e) => this.handleChange(e)} />
+                            </div>
+                        </div>
+                        <div className="field is-grouped is-grouped-centered">
+                            <div className="control">
+                                <input className="input button is-primary" type="submit" value="Submit" />
+                            </div>
+                            <div className='control button is-light'>
+                                <Link to='/' style={{color:'black'}}>Cancel</Link>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
-                <div>
+                {/* <div>
                     <div className='link'>
                         <Link to='/agent'>Back to Agent Home</Link>
                     </div>
                     <div className='link'>
                         <Link to='/'>Back to CU Home</Link>
                     </div>
-                </div>
+                </div> */}
             </div>
         )
     }

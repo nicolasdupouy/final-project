@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios"
+import { Link } from "react-router-dom";
 
 class Ship extends Component {
     constructor(props) {
         super(props)
         this.myFile = React.createRef();
-        this.state = {classname:'',statuscode:'', message: '', client: '', ship: '', portload: '', portunload: '', arrival: '', departure: '', silo: '', product: '', quantity: '', receiver: '', transporter: '' }
+        this.state = { classname: '', statuscode: '', message: '', client: '', ship: '', portload: '', portunload: '', arrival: '', departure: '', silo: '', product: '', quantity: '', receiver: '', transporter: '' }
         // this.className()
     }
 
@@ -31,14 +32,14 @@ class Ship extends Component {
 
         axios.post("http://localhost:5000/ship/register", { client, ship, portload, portunload, arrival, departure, silo, product, quantity, receiver, transporter })
             .then((response) => {
-                this.setState({classname:"message-success", message: response.data.message,client: '', ship: '', portload: '', portunload: '', arrival: '', departure: '', silo: '', product: '', quantity: '', receiver: '', transporter: '' })
+                this.setState({ classname: "message-success", message: response.data.message, client: '', ship: '', portload: '', portunload: '', arrival: '', departure: '', silo: '', product: '', quantity: '', receiver: '', transporter: '' })
                 console.log(response)
             })
             .catch(error => {
-                let messageerror=error.request.response.split(":")[1];
-                messageerror=messageerror.split("\"")[1];
-                this.setState({classname:"message-error", message: messageerror,client: '', ship: '', portload: '', portunload: '', arrival: '', departure: '', silo: '', product: '', quantity: '', receiver: '', transporter: ''  })
-                console.log(messageerror)   
+                let messageerror = error.request.response.split(":")[1];
+                messageerror = messageerror.split("\"")[1];
+                this.setState({ classname: "message-error", message: messageerror, client: '', ship: '', portload: '', portunload: '', arrival: '', departure: '', silo: '', product: '', quantity: '', receiver: '', transporter: '' })
+                console.log(messageerror)
             })
     }
     // className(){
@@ -57,45 +58,112 @@ class Ship extends Component {
     // }
     render() {
         return (
-            <div>
+            <div className="ship-container">
                 <h1>SHIP INFORMATION</h1>
-                {this.state.message!==""?(<div className={this.state.classname}> {this.state.message}</div>):""
-                }
+                <div>
+                    {this.state.message !== "" ? (<div className={this.state.classname}> {this.state.message}</div>) : ""
+                    }
+                </div>
                 <form onSubmit={this.handleFormSubmit.bind(this)}>
-                    <label>Client:</label>
-                    <input type="text" name="client" value={this.state.client} onChange={(e) => this.handleChange(e)} />
-                    <br />
-                    <label>Ship:</label>
-                    <input type="text" name="ship" value={this.state.ship} onChange={(e) => this.handleChange(e)} />
-                    <br />
-                    <label>Port load:</label>
-                    <input type="text" name="portload" value={this.state.portload} onChange={(e) => this.handleChange(e)} />
-                    <br />
-                    <label>Port unload:</label>
-                    <input type="text" name="portunload" value={this.state.portunload} onChange={(e) => this.handleChange(e)} />
-                    <br />
-                    <label>Arrival:</label>
-                    <input type="text" name="arrival" value={this.state.arrival} onChange={(e) => this.handleChange(e)} />
-                    <br />
-                    <label>Departure:</label>
-                    <input type="text" name="departure" value={this.state.departure} onChange={(e) => this.handleChange(e)} />
-                    <br />
-                    <label>Silo:</label>
-                    <input type="text" name="silo" value={this.state.silo} onChange={(e) => this.handleChange(e)} />
-                    <br />
-                    <label>Product:</label>
-                    <input type="text" name="product" value={this.state.product} onChange={(e) => this.handleChange(e)} />
-                    <br />
-                    <label>Quantity:</label>
-                    <input type="text" name="quantity" value={this.state.quantity} onChange={(e) => this.handleChange(e)} />
-                    <br />
-                    <label>Receiver:</label>
-                    <input type="text" name="receiver" value={this.state.receiver} onChange={(e) => this.handleChange(e)} />
-                    <br />
-                    <label>Transporter:</label>
-                    <input type="text" name="transporter" value={this.state.transporter} onChange={(e) => this.handleChange(e)} />
-                    <br />
-                    <input type="submit" value="Submit" />
+                    <div className="field is-horizontal">
+                        <div className="field-body">
+                            <div className="field">
+                                <label className="label">Client name:</label>
+                                <div className="control">
+                                    <input className="input" type="text" name="client" value={this.state.client} onChange={(e) => this.handleChange(e)} />
+                                </div>
+                            </div>
+                            <div className="field">
+                                <label className="label">Ship name:</label>
+                                <div className="control">
+                                    <input className="input" type="text" name="ship" value={this.state.ship} onChange={(e) => this.handleChange(e)} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="field is-horizontal">
+                        <div className="field-body">
+                            <div className="field">
+                                <label className="label">Port load:</label>
+                                <div className="control">
+                                    <input className="input" type="text" name="portload" value={this.state.portload} onChange={(e) => this.handleChange(e)} />
+                                </div>
+                            </div>
+
+                            <div className="field">
+                                <label className="label">Port unload:</label>
+                                <div className="control">
+                                    <input className="input" type="text" name="portunload" value={this.state.portunload} onChange={(e) => this.handleChange(e)} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="field is-horizontal">
+                        <div className="field-body">
+                            <div className="field">
+                                <label className="label">Arrival:</label>
+                                <div className="control">
+                                    <input className="input" type="text" name="arrival" value={this.state.arrival} onChange={(e) => this.handleChange(e)} />
+                                </div>
+                            </div>
+                            <div className="field">
+                                <label className="label">Departure:</label>
+                                <div className="control">
+                                    <input className="input" type="text" name="departure" value={this.state.departure} onChange={(e) => this.handleChange(e)} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="field is-horizontal">
+                        <div className="field-body">
+                            <div className="field">
+                                <label className="label">Silo:</label>
+                                <div className="control">
+                                    <input className="input" type="text" name="silo" value={this.state.silo} onChange={(e) => this.handleChange(e)} />
+                                </div>
+                            </div>
+                            <div className="field">
+                                <label className="label">Product:</label>
+                                <div className="control">
+                                    <input className="input" type="text" name="product" value={this.state.product} onChange={(e) => this.handleChange(e)} />
+                                </div>
+                            </div>
+                            <div className="field">
+                                <label className="label">Quantity:</label>
+                                <div className="control">
+                                    <input className="input" type="text" name="quantity" value={this.state.quantity} onChange={(e) => this.handleChange(e)} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="field is-horizontal">
+                        <div className="field-body">
+                            <div className="field">
+                                <label className="label">Receiver:</label>
+                                <div className="control">
+                                    <input className="input" type="text" name="receiver" value={this.state.receiver} onChange={(e) => this.handleChange(e)} />
+                                </div>
+                            </div>
+                            <div className="field">
+                                <label className="label">Transporter:</label>
+                                <div className="control">
+                                    <input className="input" type="text" name="transporter" value={this.state.transporter} onChange={(e) => this.handleChange(e)} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        {this.state.message !== "" ? (<div className={this.state.classname}> {this.state.message}</div>) : ""
+                        }
+                    </div>
+                    <div className="field is-grouped is-grouped-centered">
+                        <div className="control">
+                            <input className="input button is-primary" type="submit" value="Submit" />
+                        </div>
+                        <div className='control button is-light'>
+                            <Link to='/' style={{ color: 'black' }}>Cancel</Link>
+                        </div>
+                    </div>
                 </form>
             </div>
         )

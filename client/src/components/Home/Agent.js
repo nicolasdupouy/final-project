@@ -1,14 +1,19 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
+// import logo from "./../../logo.ico"
+import NavBarSimple from "./../NavBarSimple"
 
-class Agent extends Component{
-    render(){
-        return(
+class Agent extends Component {
+    render() {
+        return (
             <div>
+               <NavBarSimple/>
                 <h1>Agent Authentification</h1>
-                <Link to='/agent-login'><button>Login</button></Link>
-                <Link to='/agent-signup'><button>SignUp</button></Link>
-                <Link to='/'>Back to Home</Link>
+                <div className="home-div-container">
+                  
+                    <Link to='/agent-login'><button className="button is-link button-agent is-large">Login</button></Link>
+                    <Link to='/agent-signup'><button className="button is-primary button-agent is-large">SignUp</button></Link>
+                </div>
             </div>
         )
     }

@@ -52,10 +52,12 @@ class App extends Component {
       return (
         <div className="App">
           <NavBar username={this.state.user.username} matricule={this.state.user.matricule} location={this.state.user.location} logout={this.logout.bind(this)} />
-          <Link to='/ship'><button>Fill Ship Information</button></Link>
-          <Link to='/control-port'><button>Control marchandises at port</button></Link>
-          <Link to='/details-ship'><button>Ships Details</button></Link>
-          {this.state.isLoggedIn ? "ok": "pas ok"}
+          <div className="agent-control-container">
+            <Link to='/ship'><button className="button is-info">Ship Registration</button></Link>
+            <Link to='/control-port'><button className="button is-primary">Control marchandises at port</button></Link>
+            <Link to='/details-ship'><button className="button is-info">Ships Details</button></Link>
+          </div>
+          {/* {this.state.isLoggedIn ? "ok": "pas ok"} */}
           <Switch>
             <Route exact path="/" component={(props) => <div></div>}></Route>
             <Route exact path="/ship" component={Ship}></Route>
@@ -71,7 +73,7 @@ class App extends Component {
       return (
 
         <div className="App">
-          {this.state.isLoggedIn ? "ok": "pas ok"}
+          {/* {this.state.isLoggedIn ? "ok": "pas ok"} */}
           <Switch>
             {/* <Link to="/client"><button>Client</button></Link>
         <Link to="/agent"><button>Agent</button></Link> */}

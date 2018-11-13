@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  font-family: -apple-system, BlinkMacSystemFont,"Verdana", "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -14,14 +14,53 @@ code {
 }
 
 
-button {
+.button {
   margin: 10px;
 }
 
+button {
+  margin: 10px;
+}
 .message-error{
   color:red;
 }
 
 .message-success{
   color:green;
+}
+
+.button-agent, .button-client {
+  width:30%;
+  height:60%;
+}
+
+.home-div-container {
+  display: flex;
+  flex-direction: column;
+  margin-top:60px;
+
+}
+
+form {
+  width: 60%;
+  margin-left: 20%;
+  /* background-color: red */
+}
+
+.ship-container {
+  margin-top:40px;
+}
+
+.agent-control-container {
+  margin-top: 3%;
+}
+
+.navbar {
+  padding-bottom: 3%;
+  border-bottom: dashed 1px grey;
+
+}
+
+h1{
+  margin-bottom: 2%;
 }
