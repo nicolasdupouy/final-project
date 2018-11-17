@@ -14,7 +14,8 @@ import ClientSignup from "./components/Auth/ClientSignup";
 import ControlPort from "./components/ControlPort";
 import DetailsShips from "./components/DetailsShips";
 import axios from "axios";
-import Ship from "./components/Ship";
+// import Ship from "./components/Ship";//ship with MongoDB
+import Ship from "./components/ShipPostgre";
 
 class App extends Component {
   constructor(props) {

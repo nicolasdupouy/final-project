@@ -7,12 +7,12 @@ class ControlPort extends Component {
         this.state = { navireList: [] }
         this.getNavireName()
     }
-    
+
     getNavireName() {
         axios.get("http://localhost:5000/api/navire_liste")
             .then(response => {
                 console.log('response navire', response)
-                this.setState({ navireList: response.data.data })
+                this.setState({ navireList: response.data })
             })
     }
 
