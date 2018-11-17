@@ -6,7 +6,7 @@ class Ship extends Component {
     constructor(props) {
         super(props)
         this.myFile = React.createRef();
-        this.state = { classname: '', statuscode: '', message: '', client: '', ship: '', portload: '', portunload: '', arrival: '', departure: '', silo: '', product: '', quantity: '', receiver: '', transporter: '' }
+        this.state = { classname: '', statuscode: '', message: '', client: '', ship: '', portload: '', portunload: '', arrival: '', departure: '', silo: '', product: '', quantity: '', receiver: '', transporter: '', isNewClick: false }
         // this.className()
     }
 
@@ -37,10 +37,17 @@ class Ship extends Component {
             })
             .catch(error => {
                 let messageerror = error.request.response.split(":")[1];
-                messageerror = messageerror.split("\"")[1];
+                // if (messageerror = "") {
+                //     messageerror = messageerror.split("\"")[1];
+                // }
+                // else { }
+
+
+
                 this.setState({ classname: "message-error", message: messageerror, client: '', ship: '', portload: '', portunload: '', arrival: '', departure: '', silo: '', product: '', quantity: '', receiver: '', transporter: '' })
                 console.log(messageerror)
             })
+        this.setState({ isNewClick: !this.state.isNewClick })
     }
     // className(){
     //     // let classname="";
@@ -158,7 +165,7 @@ class Ship extends Component {
                     </div>
                     <div className="field is-grouped is-grouped-centered">
                         <div className="control">
-                            <input className="input button is-primary" type="submit" value="Submit" />
+                            <input className="input button is-primary" type="submit" value={this.state.isNewClick ? "New" : "Submit"} />
                         </div>
                         <div className='control button is-light'>
                             <Link to='/' style={{ color: 'black' }}>Cancel</Link>

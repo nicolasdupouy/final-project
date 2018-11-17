@@ -11,11 +11,14 @@ const path         = require('path');
 const cors         = require('cors');
 const session      = require('express-session');
 const passport     = require('passport');
-const Agent         = require("./models/Agent.js")
-const Client         = require("./models/Client.js")
+const Agent        = require("./models/Agent.js")
+const Client       = require("./models/Client.js")
 const bcrypt       = require('bcryptjs');
+// const knex         = require('knex');
 
 var LocalStrategy = require('passport-local').Strategy
+
+
 
 mongoose
   .connect('mongodb://localhost/control-union', {useNewUrlParser: true})
@@ -125,7 +128,14 @@ app.use('/', index);
 const agent = require('./routes/agent');
 app.use('/auth/agent', agent);
 
-const ship = require('./routes/ship');
+const ship = require('./routes/ship_postgres');
 app.use('/', ship);
+
+const elements = require('./routes/elements');
+app.use('/api', elements);
+
+
+// app.use(app.router);
+// routes.initialize(app);
 
 module.exports = app;
