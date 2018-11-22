@@ -2,55 +2,54 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 
-class ControlPort extends Component {
+class Ship extends Component {
     constructor(props) {
         super(props)
-        this.state = { classname: '', statuscode: '', message: '', arrivee: '', depart: '', quantite: '', navire: '', importateur: '', destinataire: '', produit: '', portchrgmt: '', portdechrgmt: '', silo: '', navireList: [], importateurList: [], destinataireList: [], produitList: [], portchrgmtList: [], portdechrgmtList: [], siloList: [] }
+        this.state = { classname: '', statuscode: '', message: '', arrivee: new Date(), depart: new Date(), quantite: '', navire: '', importateur: '', destinataire: '', produit: '', portchrgmt: '', portdechrgmt: '', silo: '', navireList: [], importateurList: [], destinataireList: [], produitList: [], portchrgmtList: [], portdechrgmtList: [], siloList: [] }
         this.getElementsName()
     }
 
     handleChange(e) {
         let { name, value } = e.target;
         console.log(name,value)
-        this.setState({ [name]: value });
-        console.log(this.state.navire, this.state.importateur)
+        this.setState({ [name]: value }, () => console.log(name, value));
+        
     }
 
     getElementsName() {
         axios.get("http://localhost:5000/api/navire_liste")
             .then(response => {
-                console.log('response navire', response)
-                this.setState({ navireList: response.data })
+                this.setState({ navireList: response.data, navire: response.data[0].nom },()=>console.log('response navire 1er element', response.data[0].nom))
             })
         axios.get("http://localhost:5000/api/importateur_liste")
             .then(response => {
-                console.log('response importateur', response)
-                this.setState({ importateurList: response.data })
+                
+                this.setState({ importateurList: response.data, importateur: response.data[0].nom },()=>console.log('response importateur', response.data[0].nom ))
             })
         axios.get("http://localhost:5000/api/destinataire_liste")
             .then(response => {
                 console.log('response dest', response)
-                this.setState({ destinataireList: response.data })
+                this.setState({ destinataireList: response.data, destinataire: response.data[0].nom  },()=>console.log('response dest', response.data[0].nom ))
             })
         axios.get("http://localhost:5000/api/produit_liste")
             .then(response => {
-                console.log('response produit', response)
-                this.setState({ produitList: response.data })
+                
+                this.setState({ produitList: response.data, produit: response.data[0].nom  },()=>console.log('response produit', response.data[0].nom ))
             })
         axios.get("http://localhost:5000/api/port_chrgmt_liste")
             .then(response => {
-                console.log('response port_chrgmt_liste', response)
-                this.setState({ portchrgmtList: response.data })
+                
+                this.setState({ portchrgmtList: response.data , portchrgmt: response.data[0].ville },()=>console.log('response port_chrgmt_liste', response.data[0].ville))
             })
         axios.get("http://localhost:5000/api/port_dechrgmt_liste")
             .then(response => {
-                console.log('response port_dechrgmt_liste', response)
-                this.setState({ portdechrgmtList: response.data })
+        
+                this.setState({ portdechrgmtList: response.data,portdechrgmt: response.data[0].ville  },()=> console.log('response port_dechrgmt_liste', response.data[0].ville))
             })
         axios.get("http://localhost:5000/api/silo_liste")
             .then(response => {
-                console.log('response silo_liste', response)
-                this.setState({ siloList: response.data })
+                
+                this.setState({ siloList: response.data ,silo: response.data[0].nom },()=>console.log('response silo_liste', response))
             })
     }
 
@@ -66,15 +65,18 @@ class ControlPort extends Component {
         const portchrgmt = this.state.portchrgmt
         const portdechrgmt = this.state.portdechrgmt
         const quantite = this.state.quantite
+        console.log('navire envoyé dans post', navire)
 
         event.preventDefault();
 
         axios.post("http://localhost:5000/ship/register", { arrivee, depart, navire, importateur, destinataire, produit, silo, portchrgmt, portdechrgmt, quantite })
             .then((response) => {
+                console.log("reponse server",response.data)
                 this.setState({ classname: "message-success", message: response.data.message, arrivee: '', depart: '', quantite: '', navire: '', importateur: '', destinataire: '', produit: '', portchrgmt: '', portdechrgmt: '', silo: '' })
-                console.log(response)
+                
             })
             .catch(error => {
+                console.log("err server", error)
                 let messageerror = error.request.response.split(":")[1];
                 this.setState({ classname: "message-error", message: messageerror, arrivee: '', depart: '', quantite: '', navire: '', importateur: '', destinataire: '', produit: '', portchrgmt: '', portdechrgmt: '', silo: '' })
                 console.log(messageerror)
@@ -96,7 +98,7 @@ class ControlPort extends Component {
                         <div className="field">
                             <label className="label">Départ:</label>
                             <div className="control">
-                                <input className="input" type="text" name="depart" value={this.state.depart} onChange={(e) => this.handleChange(e)} />
+                                <input className="input" type="date" name="depart" value={this.state.depart} onChange={(e) => this.handleChange(e)} />
                             </div>
                         </div>
                     </div>
@@ -168,4 +170,4 @@ class ControlPort extends Component {
     }
 }
 
-export default ControlPort;
+export default Ship;
