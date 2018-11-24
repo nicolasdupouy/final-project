@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
 import 'bulma/css/bulma.css';
 import './index.css';
+import 'react-jquery-datatables/css/datatables.min.css';
 
 ReactDOM.render(
     <BrowserRouter>

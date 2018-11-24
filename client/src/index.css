@@ -64,3 +64,26 @@ form {
 h1{
   margin-bottom: 2%;
 }
+
+.dataTable td:first-child{
+  width: 10%;
+  /* padding:1em; */
+  /* background-color: red; */
+}
+.dataTable .table{
+  margin-left:5%;
+  font-size: 0.8em;
+}
+
+.dataTable .pagination {
+  display: none;
+}
+
+.dataTable{
+  margin-top: 20px;
+}
+
+.dataTable .col-xs-4 {
+  display: inline-flex;
+  margin-bottom: 10px;
+}

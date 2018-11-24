@@ -134,6 +134,8 @@ app.use('/', ship);
 const elements = require('./routes/elements');
 app.use('/api', elements);
 
+const dum = require('./routes/dum');
+app.use('/', dum);
 
 // app.use(app.router);
 // routes.initialize(app);

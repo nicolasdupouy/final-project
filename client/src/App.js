@@ -16,6 +16,7 @@ import DetailsShips from "./components/DetailsShips";
 import axios from "axios";
 // import Ship from "./components/Ship";//ship with MongoDB
 import Ship from "./components/ShipPostgre";
+import Dum from "./components/Dum";
 
 class App extends Component {
   constructor(props) {
@@ -55,13 +56,15 @@ class App extends Component {
           <NavBar username={this.state.user.username} matricule={this.state.user.matricule} location={this.state.user.location} logout={this.logout.bind(this)} />
           <div className="agent-control-container">
             <Link to='/ship'><button className="button is-info">Ship Registration</button></Link>
-            <Link to='/control-port'><button className="button is-primary">Control marchandises at port</button></Link>
-            <Link to='/details-ship'><button className="button is-info">Ships Details</button></Link>
+            <Link to='/dum'><button className="button is-primary">Dum Registration</button></Link>
+            <Link to='/control-port'><button className="button is-info">Control marchandises at port</button></Link>
+            <Link to='/details-ship'><button className="button is-primary">Ships Details</button></Link>
           </div>
           {/* {this.state.isLoggedIn ? "ok": "pas ok"} */}
           <Switch>
-            <Route exact path="/" component={(props) => <div></div>}></Route>
+            <Route exact path="/" component={() => <div></div>}></Route>
             <Route exact path="/ship" component={Ship}></Route>
+            <Route exact path="/dum" component={Dum}></Route>
             <Route exact path="/control-port" component={ControlPort}></Route>
             <Route exact path="/details-ship" component={DetailsShips}></Route>
             <Route path="/" render={(props) => <Redirect to="/"></Redirect>}></Route>

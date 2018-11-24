@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Ship = require('.././models/Ship.js');
+// const Ship = require('.././models/Ship.js');
 const db = require('.././variables/database')
 
 router.post('/ship/register', (req, res, next) => {
@@ -98,10 +98,11 @@ router.post('/ship/details', (req, res, next) => {
     .innerJoin('destinataire', 'navire_data.destinataire_id', '=', 'destinataire.id')
     .innerJoin('silo', 'navire_data.silo_id', '=', 'silo.id')
     .innerJoin('produit', 'navire_data.produit_id', '=', 'produit.id')
+    //rajouter jointure avec prot chargement
     .select(myquery)
     .where('date_arrivee','>=',dateFrom).andWhere('date_arrivee','<=',dateTo)
     .then(data=>res.json(data))
-    .catch(err=>res.json({status:'error'}))
+    .catch(err=>res.json({status:err}))
 })
 
 module.exports = router;
