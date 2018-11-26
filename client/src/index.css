@@ -56,9 +56,9 @@ form {
 }
 
 .navbar {
+  margin-top:20px;
   padding-bottom: 3%;
-  border-bottom: dashed 1px grey;
-
+  border-bottom: solid 1px rgba(206, 202, 202, 0.767);
 }
 
 h1{

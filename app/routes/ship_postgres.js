@@ -19,6 +19,12 @@ router.post('/ship/register', (req, res, next) => {
     const myquery = { navire_id: 'navire.id', importateur_id: 'importateur.id', destinataire_id: 'destinataire.id', produit_id: 'produit.id', silo_id: 'silo.id', port_chargement_id: 'port_chargement.id', port_dechargement_id: 'port_dechargement.id' }
     console.log('navire est', navire)
     console.log('importateur est', importateur)
+    console.log('dest est', destinataire)
+    console.log('produit est', produit)
+    console.log('silo est', silo)
+    console.log('port charg est', portchrgmt)
+    console.log('port decharg est', portdechrgmt)
+    console.log('arrivee is',arrivee)
     // var myquery=format(`SELECT * from db where client=${client}`)
     //where(`client=${client}`)
     // db.select('*').from('navire').where({
@@ -34,7 +40,7 @@ router.post('/ship/register', (req, res, next) => {
             'port_dechargement.ville': portdechrgmt
         }).select(myquery)
         .then(data => {
-            console.log('dataaa', data)
+            console.log('dataaa is', data)
             var newdict = data[0]
             newdict.date_arrivee = arrivee
             newdict.date_depart = depart

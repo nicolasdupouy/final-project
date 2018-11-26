@@ -43,7 +43,7 @@ class Ship extends Component {
             })
         axios.get("http://localhost:5000/api/port_dechrgmt_liste")
             .then(response => {
-        
+                
                 this.setState({ portdechrgmtList: response.data,portdechrgmt: response.data[0].ville  },()=> console.log('response port_dechrgmt_liste', response.data[0].ville))
             })
         axios.get("http://localhost:5000/api/silo_liste")
@@ -65,8 +65,8 @@ class Ship extends Component {
         const portchrgmt = this.state.portchrgmt
         const portdechrgmt = this.state.portdechrgmt
         const quantite = this.state.quantite
-        console.log('navire envoyé dans post', navire)
-
+        console.log('portchrgmt', portchrgmt)
+        console.log('portdechrgmt', portdechrgmt)
         event.preventDefault();
 
         axios.post("http://localhost:5000/ship/register", { arrivee, depart, navire, importateur, destinataire, produit, silo, portchrgmt, portdechrgmt, quantite })

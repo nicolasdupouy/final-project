@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import { DataTable } from 'react-data-components';
+import { Link } from "react-router-dom"
 // import './css/jquery.dataTables.css'
 // const $ = require('jquery');
 // $.DataTable = require('datatables.net');
@@ -32,7 +33,7 @@ class NavireDataTable extends Component {
             { title: 'Silo', prop: 'silo_nom' },
             { title: 'Quantité BL', prop: 'quantite_BL' },
             { title: 'Quantité restante', prop: 'quantite_restante' },
-            { title: 'Supprimer', prop: 'supprimer', defaultContent: (<button onClick={this.props.clickDetails}>Action</button>)}
+            { title: 'Supprimer', prop: 'supprimer', defaultContent: (<button onClick={this.props.clickDetails}>Action</button>) }
         ];
 
 
@@ -41,9 +42,9 @@ class NavireDataTable extends Component {
                 columns={columns}
                 initialData={this.props.data}
                 initialPageLength={10}
-                // columnDefs={columnDefs}
-                // initialSortBy={{ prop: 'date', order: 'descending' }}
-                // fontSize='13px'
+            // columnDefs={columnDefs}
+            // initialSortBy={{ prop: 'date', order: 'descending' }}
+            // fontSize='13px'
             />
 
 
@@ -55,7 +56,7 @@ class NavireDataTable extends Component {
 class DetailsShips extends Component {
     constructor(props) {
         super(props);
-        this.state = { dateFrom: (new Date().toISOString().split('T')[0]), dateTo: (new Date().toISOString().split('T')[0]), listNavireData: [] }
+        this.state = { toggleClick: false, dateFrom: (new Date().toISOString().split('T')[0]), dateTo: (new Date().toISOString().split('T')[0]), listNavireData: [] }
         // console.log('date from au debut',this.state.dateFrom.toISOString().split('T')[0])
     }
 
@@ -64,22 +65,38 @@ class DetailsShips extends Component {
         this.setState({ [name]: value }, () => console.log('name is', name, ' and value is', value))
     }
 
+    yyyymmdd(dateToConvert) {
+        var x = new Date(dateToConvert);
+        var y = x.getFullYear().toString();
+        var m = (x.getMonth() + 1).toString();
+        var d = x.getDate().toString();
+        (d.length === 1) && (d = '0' + d);
+        (m.length === 1) && (m = '0' + m);
+        var yyyymmdd = y + '-' + m + '-' + d;
+        return yyyymmdd;
+    }
+
     handleFormSubmit(event) {
         const dateFrom = this.state.dateFrom
         const dateTo = this.state.dateTo
+        console.log('dateFrom', dateFrom)
+        console.log('dateFrom', dateTo)
         event.preventDefault();
         axios.post('http://localhost:5000/ship/details', { dateFrom, dateTo })
 
             .then(response => {
-                console.log('response.data',response.data)
+                console.log('response.data', response.data)
                 var valuesdict = response.data;
-                let valuesdictarray=[];
-                valuesdictarray=valuesdict.map(obj => {
-                    let newdate = new Date(Object.values(obj)[0])
-                    newdate = newdate.toISOString().split('T')[0]
-                    console.log('obj',obj)
-                    Object.values(obj)[0]=newdate
-                    obj.date=newdate
+                let valuesdictarray = [];
+                valuesdictarray = valuesdict.map(obj => {
+                    // let newdate = new Date(Object.values(obj)[0])
+                    // console.log('newdate before convert',newdate)
+                    // newdate = newdate.toISOString().split( '.' ).shift() + 'Z';
+                    let newdate = this.yyyymmdd(Object.values(obj)[0])
+                    console.log('newdate after convert', newdate)
+                    console.log('obj', obj)
+                    Object.values(obj)[0] = newdate
+                    obj.date = newdate
                     return obj//.toISOString().split('T')[0]
                 });
                 // valuesdictarray=valuesdictarray.map(datetochange=> {
@@ -87,14 +104,19 @@ class DetailsShips extends Component {
                 //     return dates.toISOString().split('T')[0]
                 // }
                 //     )
-                console.log('newdata is',valuesdictarray)
-                this.setState({ listNavireData: valuesdictarray}, () => console.log('listNavireData', this.state.listNavireData[0].importateur_nom))
+                console.log('newdata is', valuesdictarray)
+                this.setState({ listNavireData: valuesdictarray }, () => console.log('listNavireData', this.state.listNavireData[0].importateur_nom))
             }
             )
     }
 
-    navireDetails(){
-        console.log(this.state.dateFrom)
+    navireDetails() {
+     this.setState({toggleClick: true})
+            // return (
+            //     <div>
+            //     <Link to='/control-port'></Link>
+            //     </div>
+            // )
     }
 
     render() {
@@ -105,13 +127,13 @@ class DetailsShips extends Component {
                         <div className="field is-horizontal">
                             <div className="field-body">
                                 <div className="field" style={{ width: "60%" }}>
-                                    <label className="label">Arrivée:</label>
+                                    <label className="label">De:</label>
                                     <div className="control" >
                                         <input className="input" type="date" name="dateFrom" valuedefault={this.state.dateFrom} value={this.state.dateFrom} onChange={(e) => this.handleChange(e)} />
                                     </div>
                                 </div>
                                 <div className="field" style={{ width: "60%" }}>
-                                    <label className="label">Départ:</label>
+                                    <label className="label">A:</label>
                                     <div className="control">
                                         <input className="input" type="date" name="dateTo" value={this.state.dateTo} onChange={(e) => this.handleChange(e)} />
                                     </div>
@@ -130,9 +152,13 @@ class DetailsShips extends Component {
                 </div>
                 <div>
                     <div className='dataTable' >
-                    {/* <div> */}
+                        {/* <div> */}
                         <NavireDataTable data={this.state.listNavireData} clickDetails={this.navireDetails.bind(this)}></NavireDataTable>
                     </div>
+                    <div>
+                        {this.state.toggleClick ? <Link to='/control-port'></Link>: ""}
+                    </div>
+
                 </div>
             </div>
         )
