@@ -87,3 +87,14 @@ h1{
   display: inline-flex;
   margin-bottom: 10px;
 }
+
+.initialise .control{
+  /* background-color: red; */
+  margin-left: 45%;
+  margin-right: 45%
+}
+
+.container-control{
+  margin:40px;
+  /* background-color: red; */
+}

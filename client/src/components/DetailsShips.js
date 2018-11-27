@@ -8,21 +8,6 @@ import { Link } from "react-router-dom"
 
 
 class NavireDataTable extends Component {
-    // componentDidMount() {
-    //     this.$el = $(this.el);
-    //     this.$el.DataTable({
-    //         data: this.props.data,
-    //         columns: [
-    //             { title: 'Date', prop: 'date' },
-    //             { title: 'Navire', prop: 'navire_nom' },
-    //             { title: 'Importateur', prop: 'importateur_nom' },
-    //             { title: 'Destinataire', prop: 'destinataire_nom' },
-    //             { title: 'Produit', prop: 'produit_nom' },
-    //             { title: 'Silo', prop: 'silo_nom' }
-    //         ]
-    //     })
-    // }
-
     render() {
         const columns = [
             { title: 'Date', prop: 'date' },
@@ -33,7 +18,7 @@ class NavireDataTable extends Component {
             { title: 'Silo', prop: 'silo_nom' },
             { title: 'Quantité BL', prop: 'quantite_BL' },
             { title: 'Quantité restante', prop: 'quantite_restante' },
-            { title: 'Supprimer', prop: 'supprimer', defaultContent: (<button onClick={this.props.clickDetails}>Action</button>) }
+            { title: 'Action', prop: 'supprimer', defaultContent: (<button onClick={this.props.clickDetails}>Action</button>) }
         ];
 
 
@@ -111,7 +96,7 @@ class DetailsShips extends Component {
     }
 
     navireDetails() {
-     this.setState({toggleClick: true})
+     this.setState({toggleClick: !this.state.toggleClick})
             // return (
             //     <div>
             //     <Link to='/control-port'></Link>
@@ -155,9 +140,9 @@ class DetailsShips extends Component {
                         {/* <div> */}
                         <NavireDataTable data={this.state.listNavireData} clickDetails={this.navireDetails.bind(this)}></NavireDataTable>
                     </div>
-                    <div>
+                    <iframe title='control-port'>
                         {this.state.toggleClick ? <Link to='/control-port'></Link>: ""}
-                    </div>
+                    </iframe>
 
                 </div>
             </div>

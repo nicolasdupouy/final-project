@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 class Ship extends Component {
     constructor(props) {
         super(props)
-        this.state = { classname: '', statuscode: '', message: '', arrivee: new Date(), depart: new Date(), quantite: '', navire: '', importateur: '', destinataire: '', produit: '', portchrgmt: '', portdechrgmt: '', silo: '', navireList: [], importateurList: [], destinataireList: [], produitList: [], portchrgmtList: [], portdechrgmtList: [], siloList: [] }
+        this.state = { classname: '', statuscode: '', message: '', arrivee: (new Date().toISOString().split('T')[0]), depart: (new Date().toISOString().split('T')[0]), quantite: '', navire: '', importateur: '', destinataire: '', produit: '', portchrgmt: '', portdechrgmt: '', silo: '', navireList: [], importateurList: [], destinataireList: [], produitList: [], portchrgmtList: [], portdechrgmtList: [], siloList: [] }
         this.getElementsName()
     }
 
@@ -88,6 +88,7 @@ class Ship extends Component {
         return (
             <div>
                 <form onSubmit={this.handleFormSubmit.bind(this)}>
+                <div className="field is-horizontal">
                     <div className="field-body">
                         <div className="field">
                             <label className="label">Arrivée:</label>
@@ -102,7 +103,9 @@ class Ship extends Component {
                             </div>
                         </div>
                     </div>
-
+                    </div>
+                    <div className="field is-horizontal">
+                    <div className="field-body">
                     <div className="field">
                         <label className="label">Navire:</label>
                         <select className="input" name="navire" value={this.state.navire} onChange={(e) => this.handleChange(e)}>
@@ -121,7 +124,10 @@ class Ship extends Component {
                             {this.state.destinataireList.map(elem => { return (<option key={elem.nom} value={elem.nom}>{elem.nom}</option>) })}
                         </select>
                     </div>
-
+                    </div>
+                    </div>
+                    <div className="field is-horizontal">
+                    <div className="field-body">
                     <div className="field">
                         <label className="label">Produit:</label>
                         <select className="input" name="produit" value={this.state.produit} onChange={(e) => this.handleChange(e)}>
@@ -142,20 +148,25 @@ class Ship extends Component {
                             {this.state.portdechrgmtList.map(elem => { return (<option key={elem.ville} value={elem.ville}>{elem.ville}</option>) })}
                         </select>
                     </div>
-
+                    </div>
+                    </div>
+                    <div className="field is-horizontal">
+                    <div className="field-body">
                     <div className="field">
                         <label className="label">Silo:</label>
                         <select className="input" name="silo" value={this.state.silo} onChange={(e) => this.handleChange(e)}>
                             {this.state.siloList.map(elem => { return (<option key={elem.nom} value={elem.nom}>{elem.nom}</option>) })}
                         </select>
                     </div>
+                    
                     <div className="field">
                         <label className="label">Quantité:</label>
                         <div className="control">
-                            <input className="input" type="text" name="quantite" value={this.state.quantite} onChange={(e) => this.handleChange(e)} />
+                            <input className="input has-background-light" type="text" name="quantite" value={this.state.quantite} onChange={(e) => this.handleChange(e)} />
                         </div>
                     </div>
-
+                    </div>
+                    </div>
                     <div className="field is-grouped is-grouped-centered">
                         <div className="control">
                             <input className="input button is-primary" type="submit" />
