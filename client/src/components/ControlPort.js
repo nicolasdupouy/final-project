@@ -5,21 +5,34 @@ import { DataTable } from 'react-data-components';
 class CamionDataTable extends Component {
     render() {
         const columns = [
-            { title: 'N° Camion', prop: 'numero_camion' },
+            { title: 'Numero Camion', prop: 'numero_camion' },
             { title: 'START LOAD', prop: 'start-control', defaultContent: (<button onClick={this.props.clickDetails}>Action</button>) }
         ];
-
         return (
             <DataTable
                 columns={columns}
                 initialData={this.props.data}
                 initialPageLength={10}
-            // columnDefs={columnDefs}
-            // initialSortBy={{ prop: 'date', order: 'descending' }}
-            // fontSize='13px'
-            />
+            ></DataTable>
+        )
+    }
+}
 
-
+class DumDataTable extends Component {
+    render() {
+        const columns = [
+            { title: 'Numero Dum', prop: 'numero_dum' },
+            { title: 'Quantite Dum', prop: 'quantite_dum' },
+            { title: 'Quantite Dum Restante', prop: 'quantite_dum_restante' },
+            { title: 'Status', prop: 'status' },
+            { title: 'START LOAD', prop: 'start-control', defaultContent: (<button onClick={this.props.clickDetails}>Action</button>) }
+        ];
+        return (
+            <DataTable
+                columns={columns}
+                initialData={this.props.data}
+                initialPageLength={10}
+            ></DataTable>
         )
     }
 }
@@ -33,7 +46,8 @@ class ControlPort extends Component {
             arrivee: (new Date().toISOString().split('T')[0]), navire: '', portchrgmt: '', portdechrgmt: '',
             importateur: '', destinataire: '', produit: '', silo: '', quantite: '', dum: '', navireList: [],
             importateurList: [], destinataireList: [], produitList: [], portchrgmtList: [], portdechrgmtList: [],
-            siloList: [], camionList: []
+            siloList: [], camionList: [], dumList: [], dumListAlive: [],numeroDum:'',numeroDumList:[],
+            quantiteDum:'',quantiteDumList:[],quantiteDumRestante:'', quantiteDumRestanteList:[]
         }
         this.getLastDate()
         this.getElementsName()
@@ -59,9 +73,9 @@ class ControlPort extends Component {
         axios.post("http://localhost:5000/api/camion_liste_by_dest", { destinataire, produit })
             .then(response => {
 
-                let newarray = response.data.map(elem => elem.numero_camion)
-                console.log('list camion', newarray)
-                this.setState({ camionList: newarray })
+                // let newarray = response.data.map(elem => elem.numero_camion)
+                console.log('list camion', response.data.data)
+                this.setState({ camionList: response.data.data })
             })
             .catch(err => console.log('client side err', err))
     }
@@ -105,6 +119,26 @@ class ControlPort extends Component {
         console.log("start load")
     }
 
+    getDumData() {
+        const arrivee = this.state.arrivee//.toISOString().split('T')[0]
+        const navire = this.state.navire
+        const portdechrgmt = this.state.portdechrgmt
+        const importateur = this.state.importateur
+        const produit = this.state.produit
+        axios.post("http://localhost:5000/dum/data", { arrivee, navire, portdechrgmt, importateur, produit })
+            .then(response => {
+                console.log('data dum', response.data.dataset)
+                let dumListNotfinished = response.data.dataset.filter(elem => elem.status !== 'FINISHED')
+                let listNumeroDum=dumListNotfinished.map(elem=> elem.numeroDum)
+                let quantiteDumAlive=dumListNotfinished.map(elem=> elem.quantite_dum)
+                let quantiteDumRestanteAlive=dumListNotfinished.map(elem=> elem.quantite_dum_restante)
+                this.setState({ dumList: response.data.dataset, dumListAlive: dumListNotfinished,
+                    numeroDum:listNumeroDum[0],numeroDumList:listNumeroDum,quantiteDum:quantiteDumAlive[0],
+                    quantiteDumList:quantiteDumAlive, quantiteDumRestante: quantiteDumRestanteAlive[0], 
+                    quantiteDumRestanteList:quantiteDumRestanteAlive  })
+            })
+    }
+
     handleChange(e) {
         let { name, value } = e.target;
         if (name === 'arrivee') {
@@ -136,7 +170,8 @@ class ControlPort extends Component {
             )
         } else if (name === 'importateur') {
             console.log(name, value)
-            var newRes = this.state.queryModified.slice()
+            var newRes = this.state.queryRes.slice()
+            newRes = newRes.filter(elem => elem.navire_nom === this.state.navire)
             newRes = newRes.filter(elem => elem.importateur_nom === value)
             console.log('newRes', newRes)
             let listDestinataire = newRes.map(elem => elem.destinataire_nom).filter(this.onlyUnique)
@@ -148,21 +183,40 @@ class ControlPort extends Component {
                 destinataireList: listDestinataire,
                 destinataire: listDestinataire[0], produitList: listProduit, produit: listProduit[0],
                 siloList: listSilo, silo: listSilo[0]
-            }, () => this.getCamionList(this)
-            )
-        } else if (name === 'destinataire') {
-            var newRes = this.state.queryModified.slice()
-            newRes = newRes.filter(elem => elem.destinataire_nom === value)
-            let listProduit = newRes.map(elem => elem.produit_nom).filter(this.onlyUnique)
-            this.setState({ [name]: value }, () => console.log(name, value));
-            this.setState({ queryModified: newRes, produitList: listProduit, produit: listProduit[0] },
-                () => this.getCamionList(this)
+            }
             )
         } else if (name === 'produit') {
-            this.setState({ [name]: value }, () => this.getCamionList());
+            var newRes = this.state.queryRes.slice()
+            newRes = newRes.filter(elem => elem.navire_nom === this.state.navire)
+            newRes = newRes.filter(elem => elem.importateur_nom === this.state.importateur)
+            newRes = newRes.filter(elem => elem.produit_nom === value)
+            let listDestinataire = newRes.map(elem => elem.destinataire_nom).filter(this.onlyUnique)
+            this.setState({ [name]: value });
+            this.setState({
+                queryModified: newRes,
+                destinataireList: listDestinataire,
+                destinataire: listDestinataire[0]
+            }, () => this.getDumData()
+            )
+        } else if (name === 'numeroDum'){
+            var newRes = this.state.dumListAlive.slice()
+            console.log('new Res dum alive',newRes)
+            newRes = newRes.filter(elem => elem.numero_dum === value)
+            let qtyDum=newRes.map(elem=>elem.quantite_dum)
+            let qtyDumRest=newRes.map(elem=>elem.quantite_dum_restante)
+            console.log('qty DUM',qtyDum, 'qty DUM Restante', qtyDumRest)
+            this.setState({[name]: value, quantiteDum:qtyDum, quantiteDumRestante:qtyDumRest})
+
+        } else if (name === 'destinataire') {
+            var newRes = this.state.queryRes.slice()
+            newRes = newRes.filter(elem => elem.navire_nom === this.state.navire)
+            newRes = newRes.filter(elem => elem.importateur_nom === this.state.importateur)
+            newRes = newRes.filter(elem => elem.produit_nom === this.state.produit)
+            newRes = newRes.filter(elem => elem.destinataire_nom === value)
+            this.setState({ queryModified: newRes, [name]: value }, () => this.getCamionList.bind(this));
+
         }
     }
-
     render() {
         return (
             <div>
@@ -216,27 +270,65 @@ class ControlPort extends Component {
                                     {this.state.produitList.map(elem => { return (<option key={elem} value={elem}>{elem}</option>) })}
                                 </select>
                             </div>
-                            <div className="field">
-                                <label className="label">Destinataire:</label>
-                                <select className="input" name="destinataire" value={this.state.destinataire} onChange={(e) => this.handleChange(e)}>
-                                    {this.state.destinataireList.map(elem => { return (<option value={elem}>{elem}</option>) })}
-                                </select>
-                            </div>
-                           
-                        </div>
-                    </div>
-                    <div className="field">
-                        <label className="label">Liste camion:</label>
-                        <div className="control">
-                            {this.state.camionList.map(elem => { return (<option key={elem} value={elem}>{elem}</option>) })}
-                            <div className='dataTable' >
-                                {/* <div> */}
-                                <CamionDataTable data={this.state.camionList} clickDetails={this.startLoad.bind(this)}></CamionDataTable>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div className="field is-horizontal">
+                    <div className="field-body">
+                        <div className="field">
+                            <label className="label">Numero Dum:</label>
+                            <select className="input" name="numeroDum" value={this.state.numeroDum} onChange={(e) => this.handleChange(e)}>
+                                {this.state.dumListAlive.map(elem => { return (<option key={elem.numero_dum} value={elem.numero_dum}>{elem.numero_dum}</option>) })}
+                            </select>
+                        </div>
+                        <div className="field">
+                            <label className="label">Quantité Dum:</label>
+                            <select className="input" name="quantiteDum" value={this.state.quantiteDum} onChange={(e) => this.handleChange(e)}>
+                                {this.state.dumListAlive.map(elem => { return (<option key={elem.quantite_dum} value={elem.quantite_dum}>{elem.quantite_dum}</option>) })}
+                            </select>
+                        </div>
+                        <div className="field">
+                            <label className="label">Quantité Dum Restante:</label>
+                            <select className="input" name="quantiteDumRestante" value={this.state.quantiteDumRestante} onChange={(e) => this.handleChange(e)}>
+                                {this.state.dumListAlive.map(elem => { return (<option key={elem.quantite_dum_restante} value={elem.quantite_dum_restante}>{elem.quantite_dum_restante}</option>) })}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div className="field is-horizontal">
+                    <div className="field-body">
+                        <div className="field">
+                            <label className="label">Destinataire:</label>
+                            <select className="input" name="destinataire" value={this.state.destinataire} onChange={(e) => this.handleChange(e)}>
+                                {this.state.destinataireList.map(elem => { return (<option value={elem}>{elem}</option>) })}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div>
+                    <div className="dataTable">
+                        <label className="label">DUM information:</label>
+                        <div className='dataTable' >
+                            <DumDataTable data={this.state.dumList} ></DumDataTable>
+
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">Liste camions:</label>
+                        {/* {this.state.camionList.map(elem => { return (<div key={elem} value={elem}>{elem}</div>) })} */}
+                        <div className='dataTable' >
+                            {/* <div> */}
+                            <CamionDataTable data={this.state.camionList} ></CamionDataTable>
+                        </div>
+
+                    </div>
+                </div>
+            </div >
         )
     }
 }

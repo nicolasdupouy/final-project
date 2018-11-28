@@ -114,14 +114,14 @@ router.post('/camion_liste_by_dest',(req,res,next)=>{
     db('camion')
     .innerJoin('destinataire', 'camion.destinataire_id', '=', 'destinataire.id')
     .innerJoin('produit', 'camion.produit_id', '=', 'produit.id')
-    .select("numero_camion")
+    .select('numero_camion') 
     .where({
         'destinataire.nom':destinataire,
         'produit.nom':produit
     })
     .then(data=>{
         console.log("data camion", data)
-        res.json(data)
+        res.json({data})
     })
     .catch(err=>console.log(err))
 })
