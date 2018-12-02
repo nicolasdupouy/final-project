@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import 'bulma/css/bulma.css';
 import './index.css';
 import 'react-jquery-datatables/css/datatables.min.css';
+import 'react-table/react-table.css'
 
 ReactDOM.render(
     <BrowserRouter>

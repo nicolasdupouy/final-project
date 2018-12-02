@@ -86,7 +86,7 @@ class Ship extends Component {
 
     render() {
         return (
-            <div>
+            <div className="ship-container">
                 <form onSubmit={this.handleFormSubmit.bind(this)}>
                 <div className="field is-horizontal">
                     <div className="field-body">

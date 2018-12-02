@@ -33,11 +33,12 @@ router.post('/dum/data',(req,res,next)=>{
                 var newdict = data[0]
                 newdict.date_arrivee = datearrivee
                 console.log('newdict=', newdict)
-                db('dum').select('numero_dum','quantite_dum','quantite_dum_restante','status').where(newdict)
+                db('dum').select('numero_dum','quantite_dum','quantite_dum_restante','status').where(newdict).orderBy('numero_dum','asc')
                     .then(dataset => {
                         console.log('dataset',dataset)
                         if (dataset.length === 0) {
                             console.log('no data in the DB for', newdict)
+                            res.json({ dataset})
                         }
                         else {
                             res.json({ dataset})

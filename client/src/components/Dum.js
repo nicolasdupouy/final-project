@@ -104,7 +104,7 @@ class Dum extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="dum-container-form">
                 <form onSubmit={this.handleFormSubmit.bind(this)}>
                     <div className={this.state.classMessage}>
                         {this.state.message}
@@ -146,7 +146,7 @@ class Dum extends Component {
                                 </select>
                             </div>
                             <div className="field">
-                                <label className="label">Numéro de la DUM:</label>
+                                <label className="label">Numéro DUM:</label>
                                 <div className="control">
                                     <input className="input has-background-light" type="text" name="numero" value={this.state.numero} onChange={(e) => this.handleChange(e)} />
                                 </div>

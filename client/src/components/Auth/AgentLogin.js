@@ -35,7 +35,7 @@ class AgentLogin extends Component {
         return (
             <div>
                 <NavBarSimple />
-                <div>
+                <div className="auth-container">
                     <form onSubmit={this.handleFormSubmit.bind(this)}>
                         <div className="field">
                             <label className="label">Login:</label>

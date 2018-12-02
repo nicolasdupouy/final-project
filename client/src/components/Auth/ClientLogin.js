@@ -34,7 +34,7 @@ class AgentLogin extends Component {
     render() {
         return (
             <div>
-                <div>
+                <div className="auth-container">
                     <form onSubmit={this.handleFormSubmit.bind(this)}>
                         <label>Login:</label>
                         <input type="text" name="username" value={this.state.username} onChange={(e) => this.handleChange(e)} />
