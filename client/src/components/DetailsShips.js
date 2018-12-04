@@ -93,6 +93,7 @@ class DetailsShips extends Component {
                 this.setState({ listNavireData: valuesdictarray }, () => console.log('listNavireData', this.state.listNavireData[0].importateur_nom))
             }
             )
+            .catch(err=>console.log(err))
     }
 
     navireDetails() {
@@ -107,7 +108,7 @@ class DetailsShips extends Component {
     render() {
         return (
             <div>
-                <div>
+                <div className="ship-details-container">
                     <form onSubmit={this.handleFormSubmit.bind(this)}>
                         <div className="field is-horizontal">
                             <div className="field-body">

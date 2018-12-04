@@ -86,7 +86,10 @@ router.get('/last_date',(req,res,next)=>{
 router.post('/data_by_date', (req, res, next) => {
     const datearrivee = req.body.arrivee
     console.log('date arrivée est =', datearrivee)
-    const myquery = { date: 'date_arrivee', navire_nom: 'navire.nom', importateur_nom: 'importateur.nom', destinataire_nom: 'destinataire.nom', produit_nom: 'produit.nom', silo_nom:'silo.nom',port_chargement_nom: 'port_chargement.ville',port_dechargement_nom: 'port_dechargement.ville',quantite_bl:'quantite_bl',quantite_restante:'quantite_restante' }
+    const myquery = { date: 'date_arrivee', navire_nom: 'navire.nom', importateur_nom: 'importateur.nom', 
+    destinataire_nom: 'destinataire.nom', produit_nom: 'produit.nom', silo_nom:'silo.nom',
+    port_chargement_nom: 'port_chargement.ville',port_dechargement_nom: 'port_dechargement.ville',
+    quantite_bl:'quantite_bl',quantite_restante:'quantite_restante',quantite_restante_estimee:'quantite_restante_estimee' }
     db('navire_data').innerJoin('navire', 'navire_data.navire_id', '=', 'navire.id')
         .innerJoin('importateur', 'navire_data.importateur_id', '=', 'importateur.id')
         .innerJoin('destinataire', 'navire_data.destinataire_id', '=', 'destinataire.id')

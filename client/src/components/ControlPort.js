@@ -199,6 +199,7 @@ class ControlPort extends Component {
                     newRes = newRes.filter(elem => elem.destinataire_nom === firstDestinataire)
                     let qtyBL = newRes.map(elem => elem.quantite_bl)
                     let qtyBLRestante = newRes.map(elem => elem.quantite_restante)
+                    let qtyBLRestEstimee = newRes.map(elem => elem.quantite_restante_estimee)
                     // console.log('portDechrgmt', portDechrgmt)
                     this.setState({
                         queryRes: response.data.data, queryModified: response.data.data,
@@ -209,7 +210,7 @@ class ControlPort extends Component {
                         portdechrgmtList: portDechrgmt, portdechrgmt: portDechrgmt[0],
                         portchrgmtList: portChrgmt, portchrgmt: portChrgmt[0],
                         siloList: listSilo, silo: listSilo[0],
-                        quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante
+                        quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante,quantiteBLEstimee:qtyBLRestEstimee
                     }, () => {
                         this.getCamionList();
                         this.getDumData();
@@ -278,6 +279,7 @@ class ControlPort extends Component {
             let newResQty = newRes.filter(elem => (elem.importateur_nom === listImportateur[0]) & (elem.produit_nom === listProduit[0]) & (elem.destinataire_nom === listDestinataire[0]))
             let qtyBL = newResQty.map(elem => elem.quantite_bl)
             let qtyBLRestante = newResQty.map(elem => elem.quantite_restante)
+            let qtyBLRestEstimee = newResQty.map(elem => elem.quantite_restante_estimee)
             this.setState({ [name]: value }, () => console.log(name, value));
 
             // this.setState({ queryModified: newRes, importateurList: listImportateur, importateur: listImportateur[0], produitList: listProduit, produit: listProduit[0], portdechrgmtList: portDechrgmt, portdechrgmt: portDechrgmt[0] })
@@ -289,7 +291,7 @@ class ControlPort extends Component {
                 portdechrgmtList: portDechrgmt, portdechrgmt: portDechrgmt[0],
                 portchrgmtList: portChrgmt, portchrgmt: portChrgmt[0],
                 siloList: listSilo, silo: listSilo[0],
-                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante
+                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante, quantiteBLEstimee:qtyBLRestEstimee
             }, () => {
                 this.getDumData();
                 this.getCamionList();
@@ -308,13 +310,14 @@ class ControlPort extends Component {
             let newResQty = newRes.filter(elem => (elem.produit_nom === listProduit[0]) & (elem.destinataire_nom === listDestinataire[0]))
             let qtyBL = newResQty.map(elem => elem.quantite_bl)
             let qtyBLRestante = newResQty.map(elem => elem.quantite_restante)
+            let qtyBLRestEstimee = newResQty.map(elem => elem.quantite_restante_estimee)
 
             this.setState({ [name]: value }, () => console.log(name, value));
             this.setState({
                 queryModified: newRes,
                 destinataireList: listDestinataire,
                 destinataire: listDestinataire[0], produitList: listProduit, produit: listProduit[0],
-                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante
+                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante,quantiteBLEstimee:qtyBLRestEstimee
                 // siloList: listSilo, silo: listSilo[0]
             }, () => {
                 this.getDumData();
@@ -331,13 +334,13 @@ class ControlPort extends Component {
             let newResQty = newRes.filter(elem => elem.destinataire_nom === listDestinataire[0])
             let qtyBL = newResQty.map(elem => elem.quantite_bl)
             let qtyBLRestante = newResQty.map(elem => elem.quantite_restante)
-
+            let qtyBLRestEstimee = newResQty.map(elem => elem.quantite_restante_estimee)
             this.setState({ [name]: value });
             this.setState({
                 queryModified: newRes,
                 destinataireList: listDestinataire,
                 destinataire: listDestinataire[0],
-                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante
+                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante,quantiteBLEstimee:qtyBLRestEstimee
             }, () => {
                 this.getDumData();
                 this.getCamionList();
@@ -364,12 +367,12 @@ class ControlPort extends Component {
             let newResQty = newRes.slice()
             let qtyBL = newResQty.map(elem => elem.quantite_bl)
             let qtyBLRestante = newResQty.map(elem => elem.quantite_restante)
-            this.setState({ queryModified: newRes, [name]: value, quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante },
+            let qtyBLRestEstimee = newResQty.map(elem => elem.quantite_restante_estimee)
+            this.setState({ queryModified: newRes, [name]: value, quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante,quantiteBLEstimee:qtyBLRestEstimee},
                 () => {
                     this.getCamionList();
                     this.getQuantityPaimentStatus()
                 })
-
         }
     }
 

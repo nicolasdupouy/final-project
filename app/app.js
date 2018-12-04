@@ -137,6 +137,9 @@ app.use('/api', elements);
 const dum = require('./routes/dum');
 app.use('/', dum);
 
+const workflow = require('./routes/workflow');
+app.use('/', workflow);
+
 // app.use(app.router);
 // routes.initialize(app);
 

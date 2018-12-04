@@ -56,13 +56,13 @@ button {
 }
 
 
-.dum-container-form form, .ship-container form, .auth-container form{
+.dum-container-form form, .ship-container form, .auth-container form, .ship-details-container form{
   width: 60%;
   margin-left: 20%;
   /* background-color: red */
 }
 
-.ship-container {
+.ship-container, .dum-container-form, .auth-container, .ship-details-container, .container-control, .truck-load-container, .truck-load-container  {
   margin-top:40px;
 }
 
@@ -185,7 +185,7 @@ h1{
 }
 
 .container-control, .dataTable-container{
-  margin:1%;
+  /* margin:1%; */
   margin-left: 10%;
   margin-right: 10%;
 }
@@ -212,49 +212,59 @@ h1{
  }
 
  .orange {
-   color: orange
+    color: orange
  }
 
+ /*TRUCKLOAD*/
  .truck-load-container{
-   display: flex;
-   flex-direction: column;
-  margin-top:2%;
+    display: flex;
+    flex-direction: column;
+    /* margin-top:2%; */
  }
  .truck-load-container label {
-  font-size:0.9em;
-  font-weight: bold;
+    font-size:0.9em;
+    font-weight: bold;
+    color: grey;
  }
 
  .truck-detail{
-  display: inline-flex;
-  /* background-color: red; */
-  margin-left:1%;
-  margin-right:1%;
+    display: inline-flex;
+    /* background-color: red; */
+    margin-left:1%;
+    margin-right:1%;
+    justify-content: center;
+    margin-top:1%;
+    /* border:5px solid aqua; */
+    /* width:120%; */
+ }
+
+
+ /* Truck form*/
+ .truck-details3 form {
+   width: 80%;
+
+ }
+
+ .truck-details3 form .is-horizontal{
   justify-content: center;
-  /* border:1px solid black; */
-
  }
 
- .truck-detail div{
-   margin: 3%;
-   padding:1%;
-   border:1px solid rgb(156, 153, 153);
-   /* width:30% */
+ .truck-details3 form .is-horizontal .field{
+  /* width:40%; */
  }
 
- .truck-detail form {
-   /* background-color: red; */
-   /* margin-left: 10%; */
-   /* width: 180%; */
-   border: 1px solid black;
+ /* end Truck form*/
+
+ .truck-detail2 div:first-child{
+   widows: 50%;
  }
 
- .numero-camion{
-  color: hsl(171, 100%, 41%);
-  font-weight: bold;
+  .numero-camion{
+    color: hsl(171, 100%, 41%);
+    font-weight: bold;
  }
  h1{
-   font-weight: bold;
+  font-weight: bold;
  }
 
  h2{
@@ -268,11 +278,28 @@ h1{
  }
 
  .truck-load-container1 {
-   border:1px solid rgb(202, 200, 200);
-   margin:2%;
+   /* border:1px solid rgb(202, 200, 200); */
+   /* border:1px solid red; */
+   margin:1%;
    /* padding:1%; */
-   margin-left:10%;
-   margin-right:10%;
+   margin-left:12%;
+   margin-right:12%;
    font-size:0.9em;
    border-radius:5px;
+   display: flex;
+   flex-direction: column;
+ }
+/* 
+ .truck-details3{
+  border:1px solid yellow
+ } */
+
+ .truck-detail div{
+   /* margin: 3%; */
+   padding:1%;
+ }
+
+ .truck-detail2 .label{
+   font-size:0.8em;
+   width:80%;
  }
