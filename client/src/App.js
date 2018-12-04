@@ -14,6 +14,7 @@ import ClientSignup from "./components/Auth/ClientSignup";
 import ControlPort from "./components/ControlPort";
 import DetailsShips from "./components/DetailsShips";
 import TruckLoad from "./components/TruckLoad";
+import TruckLoadResumee from "./components/TruckLoadResumee";
 // import ReactTableExample from "./components/ReactTableExample";
 import axios from "axios";
 // import Ship from "./components/Ship";//ship with MongoDB
@@ -24,7 +25,7 @@ import Dum from "./components/Dum";
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { user: '', isLoggedIn: false, dataLoad:{} }
+    this.state = { user: '', isLoggedIn: false, dataLoad:{},dataTruckLoad:{} }
     this.fetchUser()
   }
 
@@ -52,10 +53,14 @@ class App extends Component {
   }
 
   truckStartLoad(data){
-    console.log('data for truck start loard', data)
+    
     this.setState({dataLoad:data})
   }
 
+  getCurrentTruckData(data, resolve){
+    console.log('data for truck already load', data)
+    this.setState({dataTruckLoad:data}, _ => resolve())
+  }
   render() {
     if (this.state.isLoggedIn) {
       return (
@@ -77,7 +82,8 @@ class App extends Component {
             <Route exact path="/control-port" render={()=><ControlPort truckStartLoad={this.truckStartLoad.bind(this)}></ControlPort>}></Route>
             <Route exact path="/details-ship" component={DetailsShips}></Route>
             {/* <Route exact path="/truck-load" component={TruckLoad}></Route> */}
-            <Route exact path="/truck-load" render={()=><TruckLoad data={this.state.dataLoad}></TruckLoad>}></Route>
+            <Route exact path="/truck-load" render={()=><TruckLoad data={this.state.dataLoad} getCurrentTruckStatus={this.getCurrentTruckData.bind(this)}></TruckLoad>}></Route>
+            <Route exact path="/truck-load-resumee" render={()=><TruckLoadResumee dataTruck={this.state.dataTruckLoad} ></TruckLoadResumee>}></Route>
             {/* <Route exact path="/react-table" component={ReactTableExample}></Route> */}
             <Route path="/" render={(props) => <Redirect to="/"></Redirect>}></Route>
           </Switch>

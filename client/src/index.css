@@ -83,7 +83,7 @@ h1{
 
 /*SHIP details*/
 .dataTable .table{
-  margin-left:3%;
+  /* margin-left:3%; */
   font-size: 0.9em;
 }
 
@@ -91,7 +91,7 @@ h1{
   text-align: center;
 }
 
-
+/********************************************CONTROL PORT****************************************/
 .dum-container {
   background-color: rgb(228, 224, 224);
   padding: 5px;
@@ -107,32 +107,44 @@ h1{
   flex-direction: column;
 } */
 
-
 .dataTable .pagination {
   display: none;
 }
 
-.dataTable-container{
+.dataTable-container, .destinataire-container{
   display: inline-flex;
-  margin:5%;
+  margin-top:5%;
 }
 
 .dataTable-container .table-show .container{
-  width:99%;
+  width:90%;
 } 
 
-.dataTable-container .dataTable:last-child{
-  width:90%;
+.dataTable .table-show  .container{
+  width:100%;
 }
 
+/* .dataTable-container .dataTable:last-child{
+  width:90%;
+} */
+
+/* .dum-info-container{
+  width:60%;
+  background-color: red;
+} */
+
 .dataTable-container .dataTable:first-child{
-  width:50%;
+  /* width:50%; */
+  /* border:1px solid hsl(171, 100%, 41%);
+  padding:1%;
+  border-radius:5px; */
   /* margin-left: 1%; */
 }
 
 .dataTable-container .dataTable .field-body {
-  margin: 10px
+  /* margin: 10px */
 }
+
 
 .dataTable-container .field-body, .dataTable-container .dataTable:last-child, .dataTable-container .dataTable-second {
   /* border:1px solid rgb(212, 211, 211); */
@@ -142,17 +154,37 @@ h1{
 }
 
 .dataTable-container .dataTable .field-body {
-  background-color: hsl(171, 100%, 41%);
+  /* background-color: hsl(171, 100%, 41%); */
   /* width: 95% */
-
 }
 
-.dataTable-container .dataTable-second {
+.destinataire-container-global{
   border:1px solid hsl(171, 100%, 41%);
+  border-radius:5px;
+  margin-top:2%;
+  padding:1%;
+}
+.destinataire-container{
+  width:100%;
+  justify-content: center;
 }
 
+.destinataire-info-container{
+  width:50%;
+  /* margin:1%; */
+  /* background-color: red; */
+}
+
+.destinataire-container .dataTable-second {
+  /* border:1px solid hsl(171, 100%, 41%); */
+  border:1px solid rgb(228, 224, 224);
+  border-radius:5px;
+  width:50%;
+  margin:1%;
+}
 .paiment-container{
-  border:1px solid hsl(171, 100%, 41%);
+  /* border:1px solid hsl(171, 100%, 41%); */
+  border:1px solid rgb(228, 224, 224);
   border-radius:5px;
   padding: 2px;
   padding-bottom: 6px;
@@ -186,21 +218,21 @@ h1{
 
 .container-control, .dataTable-container{
   /* margin:1%; */
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 15%;
+  margin-right: 15%;
 }
-
 
 .container-control label {
   font-size: 0.8em;
  }
+
  .dataTable-container label {
    font-size: 1em;
  }
 
- /* .status {
-   color: red
- } */
+ .dataTable label{
+   font-size:1em
+ }
 
  .red {
    color: red;
@@ -215,7 +247,7 @@ h1{
     color: orange
  }
 
- /*TRUCKLOAD*/
+ /***********************************************TRUCKLOAD****************************************/
  .truck-load-container{
     display: flex;
     flex-direction: column;
@@ -269,25 +301,31 @@ h1{
 
  h2{
    /* text-align: left; */
-   background-color: hsl(0, 0%, 86%);
+   /* background-color: hsl(0, 0%, 86%); */
    /* color:white; */
    border-top-right-radius:5px;
    border-top-left-radius:5px;
    font-weight: bold;
-   height:50%;
+    padding-top: 7px;
  }
 
  .truck-load-container1 {
    /* border:1px solid rgb(202, 200, 200); */
-   /* border:1px solid red; */
+   border:1px solid hsl(0, 0%, 96%);
    margin:1%;
    /* padding:1%; */
-   margin-left:12%;
-   margin-right:12%;
+   margin-left:20%;
+   margin-right:20%;
    font-size:0.9em;
    border-radius:5px;
    display: flex;
    flex-direction: column;
+ }
+
+
+ .title-container{
+   height: 40px;
+   background-color: hsl(0, 0%, 96%);
  }
 /* 
  .truck-details3{

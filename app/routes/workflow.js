@@ -3,6 +3,48 @@ const router = express.Router();
 // const Ship = require('.././models/Ship.js');
 const db = require('.././variables/database')
 
+router.post('/workflow/data', (req, res, next) => {
+    const datearrivee = req.body.arrivee//.toISOString().split('T')[0]
+    const navire = req.body.navire;
+    // const portchrgmt = req.body.portchrgmt;
+    // const portdechrgmt = req.body.portdechrgmt;
+    // const silo = req.body.silo;
+    const importateur = req.body.importateur;
+    const produit = req.body.produit;
+    const destinataire = req.body.destinataire;
+    console.log('parametressssss',navire,importateur,destinataire,produit,datearrivee)
+    // const myquery = { date_arrivee:'date_arrivee',navire_nom: 'navire.nom', importateur_nom: 'importateur.nom', 
+    // produit_nom: 'produit.nom',destinataire_nom: 'destinataire.nom',numero_camion:'numero_camion',bon_chargement:'bon_chargement', 
+    // camion_status:'camion_status',camion_timestamp:'camion_timestamp', quantite_estimee:'quantite_estimee',
+    // tare:'tare', poids_brut:'poids_brut',quantite_bl:'quantite_bl',
+    // quantite_bl_restante:'quantite_bl_restante',quantite_bl_rest_estimee:'quantite_bl_rest_estimee'}
+    db('chargement_camion').innerJoin('navire', 'chargement_camion.navire_id', '=', 'navire.id')
+    .innerJoin('importateur', 'chargement_camion.importateur_id', '=', 'importateur.id')
+    .innerJoin('destinataire', 'chargement_camion.destinataire_id', '=', 'destinataire.id')
+    .innerJoin('silo', 'chargement_camion.silo_id', '=', 'silo.id')
+    .innerJoin('produit', 'chargement_camion.produit_id', '=', 'produit.id')
+    .innerJoin('port_chargement', 'chargement_camion.port_chargement_id', '=', 'port_chargement.id')
+    .innerJoin('port_dechargement', 'chargement_camion.port_dechargement_id', '=', 'port_dechargement.id')
+    // .distinct()
+    // .select(myquery)
+    .select()
+    .where({
+        'date_arrivee': datearrivee,
+        'navire.nom': navire,
+        // 'port_dechargement.ville': portdechrgmt,
+        // 'port_chargement.ville': portchrgmt,
+        // 'silo.nom': silo,
+        'importateur.nom': importateur,
+        'produit.nom': produit,
+        'destinataire.nom': destinataire
+    })
+    .then(data => {
+        res.json({data})
+    })
+    .catch(err=>res.json({status:"not ok nottttttt"}))
+})
+
+
 router.post('/workflow/register', (req, res, next) => {
     const datearrivee = req.body.arrivee//.toISOString().split('T')[0]
     const navire = req.body.navire;

@@ -2,23 +2,23 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { DataTable } from 'react-data-components';
 import { Redirect } from "react-router-dom";
-import { timingSafeEqual } from "crypto";
+// import { timingSafeEqual } from "crypto";
 
 
 class CamionDataTable extends Component {
 
     render() {
-        const clickData=(e)=> {
-            console.log("okokok",e.currentTarget.parentNode.parentNode.children[0].innerText)
+        const clickData = (e) => {
+            console.log("okokok", e.currentTarget.parentNode.parentNode.children[0].innerText)
             this.props.clickCamionStart(e.currentTarget.parentNode.parentNode.children[0].innerText);
             // this.props.numero_camion
             // return numero_camion
         }
 
         const columns = [
-            { title: 'Numero Camion', prop: 'numero_camion',width: '30%'},
+            { title: 'Numero Camion', prop: 'numero_camion', width: '30%' },
             // { title: 'START LOAD', prop: 'start-control', defaultContent: (<button onClick={this.props.clickCamionStart}>Action</button>) }
-            { title: 'ACTION', prop: 'start-control', defaultContent: (<button className="button is-success" style={{fontSize:'1em'}} onClick={clickData}>START LOAD</button>) }
+            { title: 'ACTION', prop: 'start-control', defaultContent: (<button className="button is-success" style={{ fontSize: '1em' }} onClick={clickData}>START LOAD</button>) }
         ];
         return (
             <DataTable
@@ -71,8 +71,8 @@ class ControlPort extends Component {
             importateur: '', destinataire: '', produit: '', silo: '', quantite: '', dum: '', navireList: [],
             importateurList: [], destinataireList: [], produitList: [], portchrgmtList: [], portdechrgmtList: [],
             siloList: [], camionList: [], dumList: [], dumListAlive: [], numeroDum: '', numeroDumList: [],
-            quantiteBL: '', quantiteBLRestante: '', quantiteBLEstimee:'',classNameQtyBL: '',
-            quantiteDum: '', quantiteDumList: [], quantiteDumRestante: '', quantiteDumRestanteList: [],quantiteDumEstimee:[],
+            quantiteBL: '', quantiteBLRestante: '', quantiteBLEstimee: '', classNameQtyBL: '',
+            quantiteDum: '', quantiteDumList: [], quantiteDumRestante: '', quantiteDumRestanteList: [], quantiteDumEstimee: [],
             statusDum: '', messageDum: false, displayLoad: false
         }
         this.getLastDate()
@@ -126,7 +126,7 @@ class ControlPort extends Component {
             .then(response => {
                 console.log('DUm data avant la condition', response.data.dataset)
                 if (response.data.dataset.length === 0) {
-                   
+
                     this.setState({ messageDum: true })
                 } else {
 
@@ -135,7 +135,7 @@ class ControlPort extends Component {
                     let listNumeroDum = dumListNotfinished.map(elem => elem.numero_dum)
                     let quantiteDumAlive = dumListNotfinished.map(elem => elem.quantite_dum)
                     let quantiteDumRestanteAlive = dumListNotfinished.map(elem => elem.quantite_dum_restante)
-                    console.log('dumListNotfinished',dumListNotfinished, 'quantiteDumAlive',quantiteDumAlive)
+                    console.log('dumListNotfinished', dumListNotfinished, 'quantiteDumAlive', quantiteDumAlive)
                     this.setState({
                         dumList: response.data.dataset, dumListAlive: dumListNotfinished,
                         numeroDum: listNumeroDum[0], numeroDumList: listNumeroDum, quantiteDum: quantiteDumAlive[0],
@@ -144,8 +144,8 @@ class ControlPort extends Component {
                     }, () => {
                         this.getClassNameDumStatus()
                     }
-                    ) 
-                    
+                    )
+
                 }
             })
             .catch(err => console.log('no data for this date', err))
@@ -210,7 +210,7 @@ class ControlPort extends Component {
                         portdechrgmtList: portDechrgmt, portdechrgmt: portDechrgmt[0],
                         portchrgmtList: portChrgmt, portchrgmt: portChrgmt[0],
                         siloList: listSilo, silo: listSilo[0],
-                        quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante,quantiteBLEstimee:qtyBLRestEstimee
+                        quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante, quantiteBLEstimee: qtyBLRestEstimee
                     }, () => {
                         this.getCamionList();
                         this.getDumData();
@@ -236,7 +236,7 @@ class ControlPort extends Component {
     }
 
     camionStartLoad(numero_camion) {
-       
+
         // let arraydata=[this.state.navire]
         let arraydata = {
             date: this.state.arrivee,
@@ -244,17 +244,17 @@ class ControlPort extends Component {
             importateur: this.state.importateur,
             produit: this.state.produit,
             destinataire: this.state.destinataire,
-            numerocamion:  numero_camion,
+            numerocamion: numero_camion,
             quantite_bl: this.state.quantiteBL,
             quantite_bl_restante: this.state.quantiteBLRestante,
-            quantite_bl_estimee:this.state.quantiteBLEstimee,
-            quantite_dum:this.state.quantiteDum,
-            quantite_dum_restante:this.state.quantiteDumRestante,
-            quantite_dum_estimee:this.state.quantiteDumEstimee,
-            numero_dum_affecte:this.state.numeroDum,
+            quantite_bl_estimee: this.state.quantiteBLEstimee,
+            quantite_dum: this.state.quantiteDum,
+            quantite_dum_restante: this.state.quantiteDumRestante,
+            quantite_dum_estimee: this.state.quantiteDumEstimee,
+            numero_dum_affecte: this.state.numeroDum,
         }
         console.log('data to send to truckLoad', arraydata)
-        this.props.truckStartLoad(arraydata) 
+        this.props.truckStartLoad(arraydata)
         this.setState({ displayLoad: true });
     }
 
@@ -291,7 +291,7 @@ class ControlPort extends Component {
                 portdechrgmtList: portDechrgmt, portdechrgmt: portDechrgmt[0],
                 portchrgmtList: portChrgmt, portchrgmt: portChrgmt[0],
                 siloList: listSilo, silo: listSilo[0],
-                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante, quantiteBLEstimee:qtyBLRestEstimee
+                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante, quantiteBLEstimee: qtyBLRestEstimee
             }, () => {
                 this.getDumData();
                 this.getCamionList();
@@ -317,7 +317,7 @@ class ControlPort extends Component {
                 queryModified: newRes,
                 destinataireList: listDestinataire,
                 destinataire: listDestinataire[0], produitList: listProduit, produit: listProduit[0],
-                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante,quantiteBLEstimee:qtyBLRestEstimee
+                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante, quantiteBLEstimee: qtyBLRestEstimee
                 // siloList: listSilo, silo: listSilo[0]
             }, () => {
                 this.getDumData();
@@ -340,7 +340,7 @@ class ControlPort extends Component {
                 queryModified: newRes,
                 destinataireList: listDestinataire,
                 destinataire: listDestinataire[0],
-                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante,quantiteBLEstimee:qtyBLRestEstimee
+                quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante, quantiteBLEstimee: qtyBLRestEstimee
             }, () => {
                 this.getDumData();
                 this.getCamionList();
@@ -368,7 +368,7 @@ class ControlPort extends Component {
             let qtyBL = newResQty.map(elem => elem.quantite_bl)
             let qtyBLRestante = newResQty.map(elem => elem.quantite_restante)
             let qtyBLRestEstimee = newResQty.map(elem => elem.quantite_restante_estimee)
-            this.setState({ queryModified: newRes, [name]: value, quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante,quantiteBLEstimee:qtyBLRestEstimee},
+            this.setState({ queryModified: newRes, [name]: value, quantiteBL: qtyBL, quantiteBLRestante: qtyBLRestante, quantiteBLEstimee: qtyBLRestEstimee },
                 () => {
                     this.getCamionList();
                     this.getQuantityPaimentStatus()
@@ -461,15 +461,22 @@ class ControlPort extends Component {
                             </div>
                         </div>
                     </div>
-
-                </div>
-
-                <div className="dataTable-container">
+                    {/* <div className="container-control dataTable dum-info-container"> */}
                     <div className="dataTable">
-                        <div>
-                            <div className="field destinataire-container">
-                                <label className="label">Destinataire:</label>
-                                <select className="input is-primary is-outlined" name="destinataire" value={this.state.destinataire} onChange={(e) => this.handleChange(e)}>
+                        <label className="label">DUM information:</label>
+                        {/* <div className='dataTable' > */}
+                        <div className='table-show'>
+                            <DumDataTable data={this.state.dumList} ></DumDataTable>
+                        </div>
+                    </div>
+                </div>
+                <div className="container-control destinataire-container-global">
+                <div className="label">Destinataire:</div>
+                    <div className="dataTable destinataire-container">
+                        <div className="destinataire-info-container">
+                            <div className="field">
+                                {/* <label className="label">Destinataire:</label> */}
+                                <select className="input" name="destinataire" value={this.state.destinataire} onChange={(e) => this.handleChange(e)}>
                                     {this.state.destinataireList.map(elem => { return (<option value={elem}>{elem}</option>) })}
                                 </select>
                             </div>
@@ -477,15 +484,15 @@ class ControlPort extends Component {
                                 <label className="label">Paiement information:</label>
                                 <table >
                                     <tr>
-                                        <td style={{ width: '90%', padding:'2%' }}>Quantité BL</td>
+                                        <td style={{ width: '90%', padding: '2%' }}>Quantité BL</td>
                                         <td>{this.state.quantiteBL}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{ width: '90%', padding:'2%' }}>Quantité BL Restante</td>
+                                        <td style={{ width: '90%', padding: '2%' }}>Quantité BL Restante</td>
                                         <td>{this.state.quantiteBLRestante}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{ width: '90%', padding:'2%' }}>Quantité Restante Estimée</td>
+                                        <td style={{ width: '90%', padding: '2%' }}>Quantité Restante Estimée</td>
                                         <td>{this.state.quantiteBLEstimee}</td>
                                     </tr>
                                 </table>
@@ -509,13 +516,13 @@ class ControlPort extends Component {
                             </div>
                         </div> */}
                     </div>
-                    <div className="dataTable">
+                    {/* <div className="dataTable">
                         <label className="label">DUM information:</label>
                         {/* <div className='dataTable' > */}
-                        <div className='table-show'>
-                            <DumDataTable data={this.state.dumList} ></DumDataTable>
-                        </div>
+                    {/* <div className='table-show'>
+                        <DumDataTable data={this.state.dumList} ></DumDataTable>
                     </div>
+                </div> */}
 
                 </div>
             </div >
